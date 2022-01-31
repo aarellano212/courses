@@ -11,6 +11,7 @@ module.exports.viewProfile= async function(req, res) {
     const student = await Student.findByPk(req.params.id);
     res.render('student/profile', {student})
 }
+
 //render add
 module.exports.renderAddForm = function(req, res){
     const student = {
@@ -20,17 +21,31 @@ module.exports.renderAddForm = function(req, res){
     }
     res.render('/students/add', {student});
 }
-//add
 
+//add
+module.exports.addStudent = async function(req, res){
+    const student = await Student.create({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        grade_level: req.body.grade_level
+    });
+    res.redirect(`/students/profile/${student.id}`);
+}
 //render edit
 module.exports.renderEditForm = async function(req, res) {
     const student = await Student.findByPk(req.params.id);
     res.render('student/edit', {student});
 }
-//edit
 
 //delete
-
+module.exports.deleteStudent = async function(req, res){
+    await Student.destroy({
+        where: {
+            id:req.params.id
+        }
+    });
+    res.redirect('/students');
+}
 //update
 module.exports.updateStudent = async function(req, res){
     const student = await Student.update({

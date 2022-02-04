@@ -28,7 +28,7 @@ module.exports.renderAddForm = function(req, res){
         last_name: '',
         grade_level: 9,
     }
-    res.render('/students/add', {student});
+    res.render('students/add', {student});
 }
 
 //add
